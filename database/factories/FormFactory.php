@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Form;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class FormFactory extends Factory
 {
     protected $model = Form::class;
+
     /**
      * Define the model's default state.
      *

@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormFieldController;
-use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,14 +16,9 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 
 // Dashboard Route
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

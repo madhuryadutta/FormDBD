@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
-use App\Models\FormEntry;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 class FormEntryController extends Controller
 {
     public function store(Request $request, $formId)

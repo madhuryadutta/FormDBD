@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Form;
 use App\Models\FormField;
+use Illuminate\Http\Request;
 
 class FormFieldController extends Controller
 {
-
     public function create($formId)
     {
         $form = Form::findOrFail($formId);
+
         return view('fields.create', compact('form'));
     }
 
@@ -20,13 +19,16 @@ class FormFieldController extends Controller
     {
         $form = Form::findOrFail($formId);
         $form->fields()->create($request->only('label', 'name', 'type'));
+
         return redirect()->route('forms.show', $formId);
     }
+
     // public function edit(Form $form, FormField $field)
     public function edit($formId, $fieldId)
     {
         $form = Form::findOrFail($formId);
         $field = FormField::findOrFail($fieldId);
+
         return view('fields.edit', compact('form', 'field'));
     }
 
