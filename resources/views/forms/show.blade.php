@@ -1,122 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>{{ $form->name }}</h1>
-        <a href="{{ route('fields.create', $form->id) }}" class="btn btn-primary mb-3">Add Field</a>
-        <ul class="list-group mb-3">
-            @foreach($form->fields as $field)
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ $field->label }} ({{ $field->type }})
-                    <a href="{{ route('fields.edit', [$form->id, $field->id]) }}" class="btn btn-secondary btn-sm">Edit</a>
-                </li>
-            @endforeach
-        </ul>
+<div class="container mx-auto py-8 px-4 bg-gray-900 text-white">
+    <h1 class="text-3xl font-bold mb-4">{{ $form->name }}</h1>
 
-        <h2>Code Snippets</h2>
+    <!-- Add Field Button -->
+    <a href="{{ route('fields.create', $form->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md mb-3 inline-block">Add Field</a>
 
-        <div class="mb-3">
-            <h5>HTML</h5>
-            <pre><code class="language-html">&lt;form action="https://forms.databytedigital.com/v2/customeridrandom/random" method="POST"&gt;
-    @csrf
-    @foreach($form->fields as $field)
-        @if($field->type == 'text')
-            &lt;div class="mb-3"&gt;
-                &lt;label for="{{ $field->name }}"&gt;{{ $field->label }}&lt;/label&gt;
-                &lt;input type="text" id="{{ $field->name }}" name="{{ $field->name }}" class="form-control" required&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'email')
-            &lt;div class="mb-3"&gt;
-                &lt;label for="{{ $field->name }}"&gt;{{ $field->label }}&lt;/label&gt;
-                &lt;input type="email" id="{{ $field->name }}" name="{{ $field->name }}" class="form-control" required&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'textarea')
-            &lt;div class="mb-3"&gt;
-                &lt;label for="{{ $field->name }}"&gt;{{ $field->label }}&lt;/label&gt;
-                &lt;textarea id="{{ $field->name }}" name="{{ $field->name }}" class="form-control" required&gt;&lt;/textarea&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'number')
-            &lt;div class="mb-3"&gt;
-                &lt;label for="{{ $field->name }}"&gt;{{ $field->label }}&lt;/label&gt;
-                &lt;input type="number" id="{{ $field->name }}" name="{{ $field->name }}" class="form-control" required&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'date')
-            &lt;div class="mb-3"&gt;
-                &lt;label for="{{ $field->name }}"&gt;{{ $field->label }}&lt;/label&gt;
-                &lt;input type="date" id="{{ $field->name }}" name="{{ $field->name }}" class="form-control" required&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'checkbox')
-            &lt;div class="mb-3 form-check"&gt;
-                &lt;input type="checkbox" id="{{ $field->name }}" name="{{ $field->name }}" class="form-check-input"&gt;
-                &lt;label for="{{ $field->name }}" class="form-check-label"&gt;{{ $field->label }}&lt;/label&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'radio')
-            &lt;div class="mb-3 form-check"&gt;
-                &lt;input type="radio" id="{{ $field->name }}" name="{{ $field->name }}" class="form-check-input"&gt;
-                &lt;label for="{{ $field->name }}" class="form-check-label"&gt;{{ $field->label }}&lt;/label&gt;
-            &lt;/div&gt;
-        @elseif($field->type == 'select')
-            &lt;div class="mb-3"&gt;
-                &lt;label for="{{ $field->name }}"&gt;{{ $field->label }}&lt;/label&gt;
-                &lt;select id="{{ $field->name }}" name="{{ $field->name }}" class="form-select" required&gt;
-                    &lt;option value=""&gt;Select an option&lt;/option&gt;
-                    <!-- Add options dynamically here if needed -->
-                &lt;/select&gt;
-            &lt;/div&gt;
-        @endif
-    @endforeach
-            &lt;button type="submit" class="btn btn-success"&gt;Submit&lt;/button&gt;
-        &lt;/form&gt;</code></pre>
-            <button class="btn btn-secondary btn-clipboard" data-clipboard-target=".language-html">Copy HTML</button>
-        </div>
+    <!-- List of Fields -->
+    <ul class="space-y-2">
+        @foreach($form->fields as $field)
+        <li class="border border-gray-700 rounded-md py-2 px-4 flex justify-between items-center bg-gray-800">
+            <span class="text-white">{{ $field->label }} ({{ $field->type }})</span>
+            <a href="{{ route('fields.edit', [$form->id, $field->id]) }}" class="bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded-md text-sm">Edit</a>
+        </li>
+        @endforeach
+    </ul>
 
-        <div class="mb-3">
-            <h5>JavaScript</h5>
-            <pre><code class="language-javascript">document.querySelector('form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Add your JS code here
-});</code></pre>
-            <button class="btn btn-secondary btn-clipboard" data-clipboard-target=".language-javascript">Copy JavaScript</button>
-        </div>
-
-        <div class="mb-3">
-            <h5>PHP cURL</h5>
-            <pre><code class="language-php">&lt;?php
-$url = "https://forms.databytedigital.com/v2/customeridrandom/random"; // Replace with your endpoint URL
-
-$fields = [];
-@foreach($form->fields as $field)
-    $fields['{{ $field->name }}'] = $_POST['{{ $field->name }}'];
-@endforeach
-
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-$response = curl_exec($ch);
-curl_close($ch);
-
-echo $response;
-?&gt;</code></pre>
-            <button class="btn btn-secondary btn-clipboard" data-clipboard-target=".language-php">Copy PHP</button>
-        </div>
-
-        <div class="mb-3">
-            <h5>Python Requests</h5>
-            <pre><code class="language-python">import requests
-
-url = 'https://forms.databytedigital.com/v2/customeridrandom/random'  # Replace with your endpoint URL
-
-fields = {
-    @foreach($form->fields as $field)
-        '{{ $field->name }}': 'value',  # Replace 'value' with actual data
-    @endforeach
-}
-
-response = requests.post(url, data=fields)
-print(response.text)</code></pre>
-            <button class="btn btn-secondary btn-clipboard" data-clipboard-target=".language-python">Copy Python</button>
-        </div>
+    <!-- Code Snippets -->
+    <div class="mt-8 space-y-4">
+        @foreach($codeSnippets as $codeSnippet)
+        {!! $codeSnippet !!}
+        @endforeach
     </div>
+</div>
+<!-- Clipboard.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize clipboard
+        var clipboard = new ClipboardJS('.copy-button');
+
+        // Success message on successful copy
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.textContent = 'Copied!';
+            setTimeout(function() {
+                e.trigger.textContent = 'Copy Python';
+            }, 2000); // Reset copy button text after 2 seconds
+        });
+
+        // Error message on copy failure
+        clipboard.on('error', function(e) {
+            e.trigger.textContent = 'Press Ctrl+C to copy';
+            setTimeout(function() {
+                e.trigger.textContent = 'Copy Python';
+            }, 2000); // Reset copy button text after 2 seconds
+        });
+    });
+</script>
 @endsection

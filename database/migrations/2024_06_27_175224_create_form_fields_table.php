@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('form_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Ensure this column is defined
+            $table->foreignId('form_id')->constrained()->onDelete('cascade');
+            $table->string('label');
+            $table->string('name');
+            $table->string('type');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('form_fields');
     }
 };

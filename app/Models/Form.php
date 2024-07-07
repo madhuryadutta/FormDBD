@@ -9,7 +9,11 @@ class Form extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_id', 'publishablesecretkey'];
+
+    protected $casts = [
+        'additional_data' => 'json',
+    ];
 
     public function fields()
     {

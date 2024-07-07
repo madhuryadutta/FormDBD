@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('form_id')->constrained()->onDelete('cascade');
             $table->json('data');
+            $table->json('additional_data')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

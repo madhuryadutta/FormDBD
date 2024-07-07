@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_fields', function (Blueprint $table) {
+        Schema::create('user_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_id')->constrained()->onDelete('cascade');
-            $table->string('label');
-            $table->string('name');
-            $table->string('type');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('activity_type');
+            $table->text('description')->nullable();
+            $table->string('ip_address')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_fields');
+        Schema::dropIfExists('user_activities');
     }
 };

@@ -1,25 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Form Submissions Dashboard</h1>
+    <div class="container mx-auto py-8 px-4">
+        <h1 class="text-3xl font-bold text-white mb-6">Form Submissions Dashboard</h1>
 
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Submissions</h5>
-                        <p class="card-text">{{ $totalSubmissions }}</p>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Total Submissions Card -->
+            <div class="bg-gray-800 text-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2">Total Submissions</h2>
+                <p class="text-3xl font-bold">{{ $totalSubmissions }}</p>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Submissions Per Day (Last 7 Days)</h5>
-                        <canvas id="submissionsPerDayChart"></canvas>
-                    </div>
-                </div>
+
+            <!-- Submissions Per Day Card -->
+            <div class="bg-gray-800 text-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2">Submissions Per Day (Last 7 Days)</h2>
+                <canvas id="submissionsPerDayChart" class="mt-4"></canvas>
             </div>
         </div>
 
@@ -61,9 +56,26 @@
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
-                                precision: 0
+                                precision: 0,
+                                fontColor: '#ffffff' // Adjust tick color for dark theme
+                            },
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.1)' // Adjust grid line color for dark theme
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: '#ffffff' // Adjust tick color for dark theme
+                            },
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.1)' // Adjust grid line color for dark theme
                             }
                         }]
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: '#ffffff' // Adjust legend label color for dark theme
+                        }
                     }
                 }
             });
